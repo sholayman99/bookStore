@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage.jsx";
 import BookDetailsPage from "./pages/BookDetailsPage.jsx";
 import AppNavbar from "./components/AppNavbar.jsx";
 import AllBookPage from "./pages/AllBookPage.jsx";
+import CreateBookPage from "./pages/CreateBookPage.jsx";
 
 const App = () => {
     return (
@@ -14,6 +15,7 @@ const App = () => {
                    <Route path={"/"} element={ <HomePage /> } />
                    <Route path={"/book-details/:bookID"} element={ <BookDetailsPage /> } />
                    <Route path={"/all-books"} element={ <AllBookPage /> } />
+                   <Route path={"/add-book"} element={ <CreateBookPage /> } />
                </Routes>
            </BrowserRouter>
         </main>

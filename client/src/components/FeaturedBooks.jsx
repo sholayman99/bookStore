@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {ReadAllBook} from "../apiRequest/apiRequest.js";
-import {Card, CardHeader, CardBody, CardFooter, Typography, Button} from "@material-tailwind/react";
+import { Button} from "@material-tailwind/react";
 import {useNavigate} from "react-router-dom";
 
 const FeaturedBooks = () => {
@@ -26,7 +26,7 @@ const FeaturedBooks = () => {
             <h2 className={"lg:text-3xl  md:text-2xl text-xl font-bold uppercase my-8"}>Featured Books</h2>
             <div className={"grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-10"}>
              {
-             books.map((book,i) => <div key={i.toString()}>
+             books.slice(0,6).map((book,i) => <div key={i.toString()}>
                <div className={"bg-white flex flex-col gap-3 rounded-lg p-3"}>
                  <img className={"w-full rounded-lg h-60"} src={book['image']} alt={"book"} />
                  <div className={"flex flex-col gap-1 text-justify"}>
@@ -38,7 +38,7 @@ const FeaturedBooks = () => {
                  </div>
 
                </div>
-                 </div>
+             </div>
              )}
             </div>
         </section>
