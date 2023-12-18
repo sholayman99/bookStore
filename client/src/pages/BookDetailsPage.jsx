@@ -4,17 +4,25 @@ import {useParams} from "react-router-dom";
 import {ReadSingleBook} from "../apiRequest/apiRequest.js";
 
 const BookDetailsPage = () => {
-    const {bookID} = useParams()
+
     const [data,setData] = useState(null);
     const [loading , setLoading] = useState(false)
+
     useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+
         (async()=>{
             setLoading(true)
-            let res = await ReadSingleBook(bookID);
+            let res = await ReadSingleBook(id);
             setLoading(false);
             setData(res);
         })()
     }, []);
+
+    if(loading){
+        return <h2>Loading....</h2>
+    }
 
     return (
         <div className={"bg-[#F8F0F0]"}>

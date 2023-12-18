@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import {Button, Input} from "@material-tailwind/react";
 
@@ -6,26 +6,35 @@ import {ListDataByKeyWord, ReadAllBook} from "../apiRequest/apiRequest.js";
 import Books from "../components/Books.jsx";
 
 const AllBookPage = () => {
-  const [query, setQuery] = useState("");
-  const [queryData, setQueryData] = useState([]);
-  const [items , setItems] = useState([]);
+    const [items, setItems] = useState([]);
+    const [searchKeyword, setSearchKeyword] = useState('');
+    const [books , setBooks] = useState([])
 
-  const searchData = async() =>{
-      let res = await ListDataByKeyWord(query);
-      setQueryData(res);
-
-  }
+    const [refresh , setRefresh] = useState(0)
 
     useEffect(() => {
-        (async()=>{
-            let book = await ReadAllBook();
-            if(query === ""){
-                setItems(book)
-            }else{
-                setItems(queryData)
-            }
+        fetchData();
+        (async() => {
+            let data = await ReadAllBook();
+            setBooks(data);
         })()
-    }, [query]);
+    }, [searchKeyword,refresh]);
+
+    const fetchData = async () => {
+
+        try {
+            const response = await ListDataByKeyWord(searchKeyword);
+            console.log(response)
+            setItems(response);
+
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+    const handleSearch = () => {
+        fetchData();
+    };
 
 
   return (
@@ -36,8 +45,9 @@ const AllBookPage = () => {
        <div className="relative flex w-full my-10  gap-2 md:w-max">
 
            <Input
-             onChange={(e) => setQuery(e.target.value)} value={query}
-             type="search" placeholder="Search By Keyword"
+               value={searchKeyword}
+               onChange={(e) => setSearchKeyword(e.target.value)}
+               type="search" placeholder="Search By Keyword"
              className="!border-t-blue-gray-300 pl-9 placeholder:text-blue-gray-300 focus:!border-blue-gray-300"
              labelProps={{ className: "before:content-none after:content-none"}} />
 
@@ -53,14 +63,14 @@ const AllBookPage = () => {
 
          </div>
 
-      <Button onClick={searchData} size="md"  className="rounded-lg ">Search</Button>
+      <Button onClick={handleSearch} size="md"  className="rounded-lg ">Search</Button>
     </div>
 
      <div className={"grid lg:grid-cols-4 gap-5 md:grid-cols-2 grid-cols-1 my-5"}>
-         {
-           items.length > 0 ? items.map((item,i) => <Books key={i.toString()} item={item} />) : <h2 className={"text-red-700"}>No Available Book</h2>
-
-         }
+        {
+            items? items.map((item,i) => <Books key={i.toString()} item={item} refresh={refresh} setRefresh={setRefresh} />):
+            books.map((item,i) => <Books key={i.toString()} item={item} refresh={refresh} setRefresh={setRefresh} />)
+        }
      </div>
 
   </section>

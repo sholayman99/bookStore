@@ -73,3 +73,22 @@ export async function ListDataByKeyWord(keyWord){
     }
 }
 
+
+//delete single book
+
+export async function RemoveBook(id){
+
+    try {
+        let data = await axios.delete(`${baseUrl}/RemoveBook/${id}`);
+
+        if(data['status'] === 200){
+            return data['data'];
+        }else{
+            return false ;
+        }
+    }catch (e) {
+        return false ;
+    }
+}
+
+
