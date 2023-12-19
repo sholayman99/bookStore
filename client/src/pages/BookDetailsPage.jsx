@@ -8,6 +8,7 @@ const BookDetailsPage = () => {
     const [data,setData] = useState(null);
     const [loading , setLoading] = useState(false)
 
+
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const id = urlParams.get('id');

@@ -25,15 +25,15 @@ const Books = (props) => {
 
 
     return (
-        <div className={"bg-white flex flex-col gap-3 rounded-lg p-3"}>
-            <img className={"w-full rounded-lg h-60"} src={item['image']} alt={"book"} />
+        <div className={"bg-white  mx-auto flex flex-col gap-3 rounded-lg py-2 px-4 "}>
+            <img className={"w-64  rounded-lg h-52"} src={item['image']} alt={"book"} />
             <div className={"flex flex-col gap-1 text-justify"}>
-                <h3 className={"text-md font-medium uppercase"}>{item['title']}</h3>
-                <h2 className={"lg:text-xl font-semibold text-gray-800"}> TK. {item['price']} </h2>
-                <p className={"text-blue-700"}> <span className={"text-gray-700"}>short des:</span> {item['shortDes']} </p>
+                <h3 className={"text-sm text-blue-700 font-normal uppercase"}>{item['title']}</h3>
+                <h2 className={"lg:text-lg md:text-md text-sm font-semibold text-gray-800"}> TK. {item['price']} </h2>
+                <p className={"text-green-700 text-sm"}> <span className={"text-gray-700"}>short des:</span> {item['shortDes']} </p>
                 <div className={"flex items-center gap-2 justify-evenly"}>
                     <Button className={"w-full"} variant="gradient">
-                       <Link to={"/details?id=" + item['_id']}>See Details</Link>
+                       <Link to={"/details?id=" + item['_id']}>Details</Link>
                     </Button>
                     <Button onClick={()=>handleDelete(item['_id'])} color="red"> <RiDeleteBin2Fill size={18} /> </Button>
                 </div>

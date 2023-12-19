@@ -1,21 +1,62 @@
-import  {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Card, Input, Textarea, Button, Typography} from "@material-tailwind/react";
 import toast, { Toaster } from 'react-hot-toast';
-import {CreateBook} from "../apiRequest/apiRequest.js";
+import {CreateBook, ReadSingleBook, UpdateBook} from "../apiRequest/apiRequest.js";
+import {useNavigate, useParams} from "react-router-dom";
 const BookForm = () => {
+    const [loading , setLoading] = useState(false);
+    const navigate = useNavigate()
+    const [updatedId , setUpdatedId] = useState(null)
 
     const [formData, setFormData] = useState({title: "",image: "",shortDes: "",details: "",
         price: null, stock: null,category: "",edition: "",author: "",remark: "",rating: ""});
 
 
+    useEffect(()=>{
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+        setUpdatedId(id);
+
+        (async()=>{
+            if(id !== null){
+                await fillForm(id);
+            }
+        })()
+
+    },[])
+
+    const fillForm = async(id) =>{
+        setLoading(true)
+        let res = await ReadSingleBook(id)
+        setLoading(false)
+        if(res){
+            setFormData({title: res.title , image: res.image, shortDes: res.shortDes,details: res.details
+            ,price: res.price, stock: res.stock ,category: res.category,edition: res.edition,
+             author: res.author,remark: res.remark,rating: res.rating})
+        }
+    }
+
+
     //save form data and send it to backend
     const saveData = async() =>{
-        let res = await CreateBook(formData)
-        if(res['message']=== "success"){
-         toast.success("Added Successfully")
-            setFormData({title: "" , image: "", shortDes: "",details: ""
-                ,price: "", stock: "" ,category: "",edition: "",author: "",remark: "",rating: ""})
-        }
+       if(updatedId == null){
+           let res = await CreateBook(formData)
+           if(res['message']=== "success"){
+               toast.success("Added Successfully")
+               // setFormData({title: "" , image: "", shortDes: "",details: "", price: "", stock: "" ,
+               //     category: "",edition: "",author: "",remark: "",rating: ""})
+           }else{
+               toast.error("Unable To Create")
+           }
+       }else{
+           let res = await UpdateBook(updatedId,formData);
+           if(res['message'] === "success"){
+               toast.success("Updated Successfully")
+
+           }else{
+               toast.error("Unsuccessful attempt")
+           }
+       }
     }
 
    // input value onchange

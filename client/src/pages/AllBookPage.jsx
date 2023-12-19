@@ -38,7 +38,7 @@ const AllBookPage = () => {
 
 
   return (
-  <section className={"px-5"}>
+  <section className={"bg-[#F8F0F0] px-5"}>
 
     <div className=" items-center gap-x-2 flex">
 
@@ -66,7 +66,7 @@ const AllBookPage = () => {
       <Button onClick={handleSearch} size="md"  className="rounded-lg ">Search</Button>
     </div>
 
-     <div className={"grid lg:grid-cols-4 gap-5 md:grid-cols-2 grid-cols-1 my-5"}>
+     <div className={"grid lg:grid-cols-4 gap-10 md:grid-cols-3 grid-cols-1  my-5"}>
         {
             items? items.map((item,i) => <Books key={i.toString()} item={item} refresh={refresh} setRefresh={setRefresh} />):
             books.map((item,i) => <Books key={i.toString()} item={item} refresh={refresh} setRefresh={setRefresh} />)

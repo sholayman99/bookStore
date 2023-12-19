@@ -92,3 +92,20 @@ export async function RemoveBook(id){
 }
 
 
+//update book information
+export async function UpdateBook(id,reqBody){
+
+    try {
+        let data = await axios.post(`${baseUrl}/UpdateBook/${id}`,reqBody);
+
+        if(data['status'] === 200){
+            return data['data'];
+        }else{
+            return false ;
+        }
+    }catch (e) {
+        return false ;
+    }
+}
+
+

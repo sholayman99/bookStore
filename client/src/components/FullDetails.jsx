@@ -2,16 +2,25 @@ import React from 'react';
 import { Button,Rating  } from "@material-tailwind/react";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 import { HiOutlineHeart } from "react-icons/hi";
+import {Link, useNavigate} from "react-router-dom";
 
 
 const FullDetails = ({data}) => {
-   console.log(data)
+
+
+
     return (
         <section className={"px-5 min-h-screen  flex items-center justify-center "}>
             <div className={"  bg-white lg:p-10 p-5 rounded-md gap-24 flex lg:flex-row flex-col" +
              " items-center justify-around gap-10"}>
-            <div className={" border p-10  border-gray-500 rounded-md bg-base-200"}>
-               <img className={"h-64"} src={data['image']} alt={""} />
+            <div>
+                <div className={" border p-10  border-gray-500 rounded-md bg-base-200"}>
+                    <img className={"h-64"} src={data['image']} alt={""} />
+
+                </div>
+                <Button className={"w-full mt-2"}>
+                    <Link to={"/add-book?id=" + data['_id']} >Edit</Link>
+                </Button>
             </div>
 
             <div className={"text-justify flex flex-col gap-4 max-w-lg"}>
@@ -22,8 +31,8 @@ const FullDetails = ({data}) => {
              {data['title']} <span className={"text-xs font-bold" +
              "lowercase text-orange-900"}> ({data['remark']}) </span></h3>
 
-             <h4 className={"lg:text-sm  uppercase text-gray-500"}> By
-             <span className={"text-blue-700"}>{data['author']}</span></h4>
+             <h4 className={"lg:text-sm  uppercase text-gray-500"}>
+                 By <span className={"text-blue-700"}>{data['author']}</span></h4>
 
              <h6 className={"text-gray-800 text-sm font-thin"}>
              Category: <span className={"text-blue-700 font-semibold"}>
